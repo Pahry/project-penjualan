@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pahry - Qtasnim</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body style="background: lightgray">
+    
+    <!-- Ambil Tanggal Hari Ini -->
+    <script>
+        var date = new Date();
+        var currentDate = date.toISOString().substring(0,10);
+        var currentTime = date.toISOString().substring(11,16);
+    </script>
+
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-light w3-bar-block" style="width:10%">
+        <h3 class="w3-bar-item">Menu</h3>
+        <a href="#" class="w3-bar-item w3-button">Data Transaksi</a>
+        <a href="#" class="w3-bar-item w3-button">Data Barang</a>
+    </div>
+
+    <div class="container mt-5" style="margin-left: 10%">
+        <div class="row">
+            <div class="col-md-12">
+                <% if (messages.error) { %>
+                    <div class="alert alert-danger" role="alert"><%- messages.error %></div>
+                    <% } %>
+                <div class="card border-0 shadow rounded">
+                    <div class="card-body">
+                        <form action="/posts/tambahTransaksiAksi" method="post">
+                            <div class="form-group">
+                                <label for="nama_barang">Nama Barang</label>
+                                <select class="form-control" id="nama_barang" name="nama_barang">
+                                    <% for(i=0; i<data.length; i++){ %> 
+                                    <option value="<%= data[i].id_barang %>"><%= data[i].nama_barang %></option>
+                                    <% } %>
+                                </select>
+                              </div>
+                            <div class="form-group">
+                                <label for="jumlah_terjual">Pembelian</label>
+                                <input type="number" class="form-control" name="jumlah_terjual" id="jumlah_terjual" min="0" max="<%= data[0].stok %>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_transaksi">Tanggal</label>
+                                <input type="date" class="form-control" name="tanggal_transaksi" id="tanggal_transaksi" value="" disabled>
+                                
+                                
+                            </div>
+                         
+                            
+                            <button type="submit" class="btn btn-primary">Tambah</button>
+                            <a href="/posts/transaksi" class="btn btn-danger">Kembali</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    
+    <script>
+        document.getElementById('tanggal_transaksi').value = currentDate;	
+    </script>
+
+</body>
+</html>
